@@ -78,3 +78,9 @@ javascript
 You can customize this `README.md` file with your project-specific details and replace placeholders like `YourUsername` with your actual GitHub username and `random-event-simulation` with your repository name.
 
 The Render file can be found at https://car-w655.onrender.com/
+
+
+For Instructor: I updated the EDA file per instructions. I am unsure why the charts are still not showing. Everything else appears to be showing. In Jupyter it all appears fine.
+
+As to the recommendation I updated the App.py file with 
+selected_models = st.multiselect("Select Car Models to Display", df['type'].unique())
