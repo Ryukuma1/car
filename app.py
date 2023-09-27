@@ -2,17 +2,19 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+# Load the dataset
 df = pd.read_csv('vehicles_us.csv')
 
-st.header("Visualization App")
+# Streamlit app header
+st.header("Car Price Distribution by Model")
 
-show_histogram = st.checkbox("Show Histogram")
+# Allow users to choose car models to display
+selected_models = st.multiselect("Select Car Models to Display", df['model'].unique())
 
-if show_histogram:
-    st.write("Histogram:")
-    fig = px.histogram(df, x='price')
-    st.plotly_chart(fig)
+# Filter the dataset based on selected car models
+filtered_df = df[df['model'].isin(selected_models)]
 
-st.write("Scatter Plot:")
-fig = px.scatter(df, x='price', y='type')
+# Display the histogram with color-coded models
+st.write("Car Price Histogram:")
+fig = px.histogram(filtered_df, x='price', color='model', title='Car Price Distribution by Model')
 st.plotly_chart(fig)
