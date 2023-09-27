@@ -9,19 +9,18 @@ df = pd.read_csv('vehicles_us.csv')
 st.header("Visualization App")
 
 # Allow users to choose car types or models to display in the histogram
-selected_types = st.multiselect("Select Car Types or Models", df['type'].unique())
+selected_types = st.multiselect("Select Car Types or Models", ['All'] + list(df['type'].unique()))
 
-# Filter the dataset based on selected car types or models
-filtered_df = df[df['type'].isin(selected_types)]
-
-# Check if any selections were made
-if len(selected_types) > 0:
-    st.write("Histogram:")
-    fig = px.histogram(filtered_df, x='price')
-    st.plotly_chart(fig)
+# Check if "All" is selected
+if 'All' in selected_types:
+    filtered_df = df  # Display all data if "All" is selected
 else:
-    st.write("Please select one or more car types or models to display the histogram.")
+    filtered_df = df[df['type'].isin(selected_types)]
 
-st.write("Scatter Plot:")
-fig = px.scatter(df, x='price', y='type')
-st.plotly_chart(fig)
+# Display the scatter plot alongside the histogram
+st.write("Histogram and Scatter Plot:")
+fig_histogram = px.histogram(filtered_df, x='price', color='type', title='Car Price Distribution by Type')
+fig_scatter = px.scatter(filtered_df, x='price', y='type')
+
+st.plotly_chart(fig_histogram)
+st.plotly_chart(fig_scatter)
